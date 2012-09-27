@@ -19,6 +19,7 @@ package org.jboss.cdi.tck.tests.context.request.event.remote;
 import static org.jboss.cdi.tck.TestGroups.CONTEXTS;
 import static org.jboss.cdi.tck.TestGroups.JAVAEE_FULL;
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 import javax.ejb.EJB;
 
@@ -64,8 +65,7 @@ public class RequestScopeEventRemoteTest extends AbstractTest {
         assertEquals(foo.ping(), "pong");
 
         ObserverResults results = foo.getObserverResults();
-        assertEquals(results.getInitialized(), Integer.valueOf(2));
-        assertEquals(results.getDestroyed(), Integer.valueOf(1));
+        assertTrue(results.isInitializedCalled());
     }
 
 }

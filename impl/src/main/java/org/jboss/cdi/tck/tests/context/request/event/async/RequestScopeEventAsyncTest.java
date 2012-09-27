@@ -64,8 +64,6 @@ public class RequestScopeEventAsyncTest extends AbstractTest {
         String content = page.getContent();
 
         checkContent(content, "(Active:)(\\w+)", "true");
-        // Test request and async request
-        checkContent(content, "(Initialized:)(\\d+)", "2");
         // Timeout request only
         checkContent(content, "(Destroyed:)(\\d+)", "1");
     }

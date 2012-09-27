@@ -20,29 +20,23 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Destroyed;
-import javax.enterprise.context.Initialized;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.event.Observes;
 
 @ApplicationScoped
-public class ObservingBean {
+public class ApplicationScopedObserver {
 
-    private final AtomicInteger initializedRequestCount = new AtomicInteger();
     private final AtomicInteger destroyedRequestCount = new AtomicInteger();
 
-    public <T extends Object> void observeRequestInitialized(@Observes @Initialized(RequestScoped.class) T event) {
-        initializedRequestCount.incrementAndGet();
-    }
-
-    public <T extends Object> void observeRequestDestroyed(@Observes @Destroyed(RequestScoped.class) T event) {
+    <T extends Object> void observeRequestDestroyed(@Observes @Destroyed(RequestScoped.class) T event) {
         destroyedRequestCount.incrementAndGet();
     }
 
-    public AtomicInteger getInitializedRequestCount() {
-        return initializedRequestCount;
+    AtomicInteger getDestroyedRequestCount() {
+        return destroyedRequestCount;
     }
 
-    public AtomicInteger getDestroyedRequestCount() {
-        return destroyedRequestCount;
+    void reset() {
+        destroyedRequestCount.set(0);
     }
 }

@@ -22,18 +22,26 @@ import java.util.concurrent.Future;
 import javax.ejb.AsyncResult;
 import javax.ejb.Asynchronous;
 import javax.ejb.Stateless;
-import javax.enterprise.context.RequestScoped;
-import javax.enterprise.inject.spi.BeanManager;
 import javax.inject.Inject;
 
 @Stateless
 public class AsyncService {
 
     @Inject
-    BeanManager beanManager;
+    private RequestScopedObserver requestScopedObserver;
+
+    @Inject
+    private ApplicationScopedObserver observer;
 
     @Asynchronous
     public Future<Boolean> compute() {
-        return new AsyncResult<Boolean>(beanManager.getContext(RequestScoped.class).isActive());
+        /*
+         * This verifies that:
+         * 1) Request context is active
+         * 2) @Initialized(RequestScoped.class) was received
+         * TODO: how to properly verify @Destroyed(RequestScoped)??
+         */
+        observer.reset();
+        return new AsyncResult<Boolean>(requestScopedObserver.isInitializedObserved());
     }
 }

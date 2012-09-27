@@ -23,22 +23,14 @@ public class ObserverResults implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Integer initialized;
+    private boolean initializedCalled;
 
-    private Integer destroyed;
-
-    public ObserverResults(Integer initialized, Integer destroyed) {
-        super();
-        this.initialized = initialized;
-        this.destroyed = destroyed;
+    public ObserverResults(boolean initializedCalled) {
+        this.initializedCalled = initializedCalled;
     }
 
-    public Integer getInitialized() {
-        return initialized;
-    }
-
-    public Integer getDestroyed() {
-        return destroyed;
+    public boolean isInitializedCalled() {
+        return initializedCalled;
     }
 
 }

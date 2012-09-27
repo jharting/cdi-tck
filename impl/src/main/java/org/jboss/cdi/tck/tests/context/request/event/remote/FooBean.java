@@ -49,8 +49,7 @@ public class FooBean implements FooRemote {
     }
 
     public ObserverResults getObserverResults() {
-        return new ObserverResults(observingBean.getInitializedRequestCount().get(), observingBean.getDestroyedRequestCount()
-                .get());
+        return new ObserverResults(observingBean.isInitializedObserved());
     }
 
 }
